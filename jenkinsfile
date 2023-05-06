@@ -1,0 +1,82 @@
+pipeline {
+    agent any 
+    tools {
+  maven 'M2_HOME'
+    }      
+
+    triggers {
+    PollSCM  '* * * * *'
+    }
+
+    stages {
+        stage('maven package')
+        steps {
+
+
+            echo 'Hello'
+           
+        }
+    }
+     stages('build') {
+       steps {     
+       sh 'mvn clean'
+       sh 'mvn install'
+       sh 'mvn package'
+       }
+     }
+      stage ( 'test') {
+        steps  {
+          sh 'mvn test'
+        }  
+      }
+          
+        
+      
+    
+       stage( 'deploy ') {
+
+        steps {
+            echo 'deploy'
+        }
+        }
+    }  
+    }    
+             
+    stages { 
+       stage('code checkout') {
+            steps {
+                echo 'Hello '
+                sleep5
+        } 
+    }
+     stage( 'maven packages') {
+       steps  {
+         sh 'mvn clean'
+         sh 'mvn install'
+         sh 'mvn clean'
+                 
+       }
+     }
+          stage  'test'
+          steps {
+          sleep 5
+       }
+     }
+    }
+          
+
+    stages {
+        stage('Hello') {
+            steps {
+                echo 'Hello World'
+            }
+        } 
+        stage('built') {
+            steps {
+                echo 'Hello World'
+            }
+        } 
+    }
+}
+            
+                
